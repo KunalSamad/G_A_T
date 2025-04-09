@@ -1,0 +1,9 @@
+🧠 Recommended Additions (To Add Later)
+Enhancement	Purpose
+Set a realistic User-Agent	Mimic a normal user browser
+Set common screen resolution	Avoid detection by headless resolution defaults
+Disable webdriver property via CDP	Mask navigator.webdriver = true
+Set navigator properties (like plugins, languages)	Mimic real user browser fingerprints
+Use undetected-chromedriver	Provides many anti-bot bypasses out of the box
+Use time delays (randomized)	Avoid clicking/typing at bot speed during automation
+Avoid common Selenium selectors (data-testid, XPaths used in tutorials)	More stealthy DOM interaction

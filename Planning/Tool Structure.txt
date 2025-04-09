@@ -1,0 +1,26 @@
+gmx_automation_tool/
+│
+├── main.py                       # Main entry point (only used at the end when all features are ready)
+│
+├── browser/
+│   └── browser_launcher.py       # Initializes browser and returns driver
+│
+├── features/
+│   ├── login_handler.py          # Handles login functionality
+│   ├── captcha_solver.py         # (Future) Handles captcha solving (fallback to manual if needed)
+│   ├── popup_handler.py          # (Future) Handles popups (e.g., free/premium, checkboxes)
+│   ├── verteiler_creator.py      # (Future) Creates Verteiler lists
+│   └── account_manager.py        # (Future) Handles multiple account switching, retry, etc.
+│
+├── utils/
+│   ├── config.py                 # Central config (paths, credentials, feature toggles)
+│   └── helper.py                 # Shared utility functions (e.g., waits, logs)
+│
+├── data/
+│   ├── email_list.txt            # List of emails to upload per account
+│   └── logs/                     # (Optional) Store logs or history
+│
+├── build/                        # (Ignored during dev) Final EXE and build files via PyInstaller
+│
+├── requirements.txt              # All needed pip packages
+└── README.md                     # Project overview
