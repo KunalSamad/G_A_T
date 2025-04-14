@@ -5,7 +5,7 @@ from browser.browser_launcher import create_browser
 from features.login_handler import login_to_gmx
 from features.verify_login_handler import handle_second_login_page
 from features.navigate_to_settings import go_to_settings_page
-from features.navigate_to_verteiler import sniff_jsessionid_from_cdp
+from features.navigate_to_verteiler import extract_verteiler_href
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 
@@ -51,7 +51,7 @@ else:
 go_to_settings_page(driver)
 
 # Step 7: Use DevTools log to sniff Verteiler page link
-verteiler_url = sniff_jsessionid_from_cdp(driver)
+verteiler_url = extract_verteiler_href(driver)
 if verteiler_url:
     driver.get(verteiler_url)
     print("🟢 Successfully opened Verteiler page via CDP sniffing.")

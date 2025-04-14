@@ -15,6 +15,9 @@ def create_browser():
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     chrome_options.add_experimental_option('useAutomationExtension', False)
 
+    # ✅ Enable performance logging for CDP sniffing
+    chrome_options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
+
     service = Service(CHROMEDRIVER_PATH)
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver

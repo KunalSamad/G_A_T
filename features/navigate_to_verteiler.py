@@ -1,32 +1,32 @@
 # File: features/navigate_to_verteiler.py
 
-import json
-import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.remote.webdriver import WebDriver
+import time
 
+def extract_verteiler_href(driver: WebDriver):
+    print("🔍 Looking for Verteiler link inside iframes...")
 
-def sniff_jsessionid_from_cdp(driver: WebDriver, timeout: int = 15):
-    """
-    Uses Chrome DevTools Protocol (CDP) logs to find the Verteiler jsessionid URL.
-    """
-    print("🔍 Listening to Chrome DevTools logs for Verteiler link...")
-    time.sleep(timeout)  # Wait for internal network activity to complete
+    time.sleep(2)  # Small delay to allow page elements to render
+    iframes = driver.find_elements(By.TAG_NAME, "iframe")
+    print(f"📦 Found {len(iframes)} iframe(s). Scanning each...")
 
-    try:
-        logs = driver.get_log("performance")
-        for entry in logs:
-            message = json.loads(entry["message"])
-            url = message.get("message", {}).get("params", {}).get("request", {}).get("url", "")
+    for index, iframe in enumerate(iframes):
+        try:
+            driver.switch_to.default_content()
+            driver.switch_to.frame(iframe)
+            print(f"➡️ Switched to iframe {index}...")
 
-            if "distributionLists;jsessionid=" in url:
-                print("✅ Verteiler URL with jsessionid detected:")
-                print(url)
-                return url
+            # Look for the Verteiler link
+            verteiler = driver.find_element(By.CSS_SELECTOR, 'a[data-webdriver="MAILINGLISTS"]')
+            href = verteiler.get_attribute("href")
+            if href:
+                print("✅ Found Verteiler link with jsessionid:")
+                print(href)
+                return href
+        except:
+            continue
 
-        print("❌ No Verteiler jsessionid link found in DevTools logs.")
-    except Exception as e:
-        print(f"⚠️ Error while sniffing CDP logs: {e}")
-
+    driver.switch_to.default_content()
+    print("❌ Verteiler link not found in any iframe.")
     return None
